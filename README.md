@@ -1,8 +1,8 @@
-# Aria Robot Feedback — Frontend
+# Robot Feedback — Frontend
 
 **Bank of Abyssinia · Internal Use Only**
 
-Frontend for the Aria robot customer feedback platform, serving both the customer-facing kiosk and the admin panel.
+Frontend for the robot customer feedback platform, serving both the customer-facing kiosk and the admin panel.
 
 ---
 
