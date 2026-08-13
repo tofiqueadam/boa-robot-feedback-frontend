@@ -47,10 +47,10 @@ export function KioskHeader({ robotName, locationName, formDescription }: Feedba
         </div>
       </div>
 
-      <h1 className="font-serif font-semibold text-[30px] leading-tight mb-2.5 text-ink">
+      <h1 className="font-serif font-semibold text-[24px] md:text-[30px] leading-tight mb-2.5 text-ink">
         የሮቦት አገልግሎት አስተያየት መስጫ
       </h1>
-      <p className="text-ink-soft text-[15px] max-w-md mx-auto leading-relaxed">
+      <p className="text-ink-soft text-[14px] md:text-[15px] max-w-md mx-auto leading-relaxed">
         {formDescription}
       </p>
     </div>

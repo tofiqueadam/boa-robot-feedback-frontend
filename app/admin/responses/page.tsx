@@ -27,11 +27,11 @@ export default function ResponsesPage() {
   return (
     <div>
       {/* Page header */}
-      <div className="flex items-end justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
         <div>
-          <h1 className="font-serif font-semibold text-[26px] text-ink">Responses</h1>
+          <h1 className="font-serif font-semibold text-[22px] md:text-[26px] text-ink">Responses</h1>
           {totalResponses !== null && (
-            <p className="font-mono text-[14px] text-ink-soft mt-0.5">
+            <p className="font-mono text-[13px] md:text-[14px] text-ink-soft mt-0.5">
               {totalResponses.toLocaleString()} total responses
             </p>
           )}

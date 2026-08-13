@@ -39,6 +39,7 @@ const NAV = [
 
 const SIDEBAR_FULL = 256;
 const SIDEBAR_MINI = 68;
+const MOBILE_BREAKPOINT = 768;
 
 type SaveState = "idle" | "saving" | "saved" | "error";
 
@@ -48,9 +49,23 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   const [user, setUser]             = useState<AdminUser | null>(null);
   const [collapsed, setCollapsed]   = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [userMenu, setMenu]         = useState(false);
   const [saveState, setSaveState]   = useState<SaveState>("idle");
   const [permData, setPermData]     = useState(() => resolvePermissions("admin", null));
+  const [isMobile, setIsMobile]     = useState(false);
+
+  // Detect mobile on mount and on resize
+  useEffect(() => {
+    const check = () => {
+      const mobile = window.innerWidth < MOBILE_BREAKPOINT;
+      setIsMobile(mobile);
+      if (mobile) setCollapsed(false);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   // Load user + permissions once on mount
   useEffect(() => {
@@ -79,7 +94,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   const active = NAV.find((n) => pathname.startsWith(n.href))?.key ?? "questions";
   const crumb  = NAV.find((n) => n.key === active)?.label ?? "";
-  const sideW  = collapsed ? SIDEBAR_MINI : SIDEBAR_FULL;
+  const sideW  = isMobile ? 0 : (collapsed ? SIDEBAR_MINI : SIDEBAR_FULL);
 
   const handleLogout = async () => {
     setMenu(false);
@@ -87,40 +102,52 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     router.replace("/admin/login");
   };
 
+  // Close mobile drawer on navigation
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
+
   return (
     <PermissionsContext.Provider value={stablePerms}>
       <div className="min-h-screen flex bg-[#F2F1EC]">
 
-        {/* ── SIDEBAR — fixed ──────────────────────────────────────── */}
+        {/* ── MOBILE OVERLAY ───────────────────────────────────────── */}
+        {isMobile && mobileOpen && (
+          <div
+            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+            onClick={() => setMobileOpen(false)}
+          />
+        )}
+
+        {/* ── SIDEBAR ──────────────────────────────────────────────── */}
         <aside
-          className="fixed top-0 left-0 h-screen z-40 bg-[#0D0D0D] flex flex-col overflow-hidden transition-[width] duration-300 ease-in-out"
-          style={{ width: sideW }}
+          className={`fixed top-0 left-0 h-screen z-50 bg-[#0D0D0D] flex flex-col overflow-hidden transition-[width,transform] duration-300 ease-in-out ${
+            isMobile
+              ? `w-[256px] ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`
+              : `${collapsed ? "w-[68px]" : "w-[256px]"} translate-x-0`
+          }`}
         >
           {/* Brand */}
-          <div className={`border-b border-white/[0.06] transition-all duration-300 ${collapsed ? "px-3 py-5 flex justify-center" : "px-5 py-6"}`}>
-            {collapsed
+          <div className={`border-b border-white/[0.06] transition-all duration-300 ${!isMobile && collapsed ? "px-3 py-5 flex justify-center" : "px-5 py-6"}`}>
+            {!isMobile && collapsed
               ? <Image src="/boa-mark.png" alt="BoA" width={36} height={28} style={{ objectFit: "contain", opacity: 0.8 }} />
               : <BoaLogo variant="sidebar" />
             }
           </div>
 
-          {!collapsed && (
-            <div className="px-5 pt-5 pb-1.5">
-              <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-white/20 font-semibold">Navigation</span>
-            </div>
-          )}
-          {collapsed && <div className="pt-4" />}
+          <div className="px-5 pt-5 pb-1.5">
+            <span className="font-mono text-[9px] tracking-[0.18em] uppercase text-white/20 font-semibold">Navigation</span>
+          </div>
 
           {/* Nav */}
           <nav className="flex flex-col gap-1 flex-1 px-3">
             {NAV.map((item) => {
               const isActive = active === item.key;
+              const mini = !isMobile && collapsed;
               return (
                 <div key={item.key} className="relative group">
                   <button
                     onClick={() => router.push(item.href)}
                     className={`flex items-center gap-3 w-full text-left transition-all duration-150 rounded-[12px] ${
-                      collapsed ? "px-[13px] py-3 justify-center" : "px-4 py-3"
+                      mini ? "px-[13px] py-3 justify-center" : "px-4 py-3"
                     } ${isActive ? "bg-[#E8A020] text-[#0D0D0D]" : "text-white/40 hover:text-white hover:bg-white/[0.07]"}`}
                   >
                     <span className={`flex-shrink-0 ${isActive ? "text-[#0D0D0D]" : "text-white/40 group-hover:text-white/80"}`}>
@@ -128,12 +155,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                     </span>
                     <span
                       className="font-medium text-[13.5px] whitespace-nowrap overflow-hidden transition-all duration-300"
-                      style={{ maxWidth: collapsed ? 0 : 160, opacity: collapsed ? 0 : 1 }}
+                      style={{ maxWidth: mini ? 0 : 160, opacity: mini ? 0 : 1 }}
                     >
                       {item.label}
                     </span>
                   </button>
-                  {collapsed && (
+                  {mini && (
                     <div className="absolute left-full top-1/2 -translate-y-1/2 ml-3 z-50 pointer-events-none">
                       <div className="bg-white text-[#0D0D0D] text-[12.5px] font-semibold px-3 py-1.5 rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.15)] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-150 border border-[#E6E5E0]">
                         {item.label}
@@ -146,26 +173,28 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          {/* Collapse toggle */}
-          <div className="px-3 pb-5 pt-3 border-t border-white/[0.06]">
-            <button
-              onClick={() => setCollapsed((c) => !c)}
-              className={`flex items-center gap-3 w-full text-left px-3 py-2.5 rounded-[11px] text-white/25 hover:text-white/60 hover:bg-white/[0.05] transition-all ${collapsed ? "justify-center" : ""}`}
-              title={collapsed ? "Expand" : "Collapse"}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}
-                className={`w-[17px] h-[17px] flex-shrink-0 transition-transform duration-300 ${collapsed ? "rotate-180" : ""}`}>
-                <path d="M15 18l-6-6 6-6"/>
-                <path d="M3 6h2M3 12h2M3 18h2"/>
-              </svg>
-              <span
-                className="font-medium text-[13px] whitespace-nowrap overflow-hidden transition-all duration-300"
-                style={{ maxWidth: collapsed ? 0 : 160, opacity: collapsed ? 0 : 1 }}
+          {/* Collapse toggle (desktop only) */}
+          {!isMobile && (
+            <div className="px-3 pb-5 pt-3 border-t border-white/[0.06]">
+              <button
+                onClick={() => setCollapsed((c) => !c)}
+                className={`flex items-center gap-3 w-full text-left px-3 py-2.5 rounded-[11px] text-white/25 hover:text-white/60 hover:bg-white/[0.05] transition-all ${collapsed ? "justify-center" : ""}`}
+                title={collapsed ? "Expand" : "Collapse"}
               >
-                Collapse
-              </span>
-            </button>
-          </div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}
+                  className={`w-[17px] h-[17px] flex-shrink-0 transition-transform duration-300 ${collapsed ? "rotate-180" : ""}`}>
+                  <path d="M15 18l-6-6 6-6"/>
+                  <path d="M3 6h2M3 12h2M3 18h2"/>
+                </svg>
+                <span
+                  className="font-medium text-[13px] whitespace-nowrap overflow-hidden transition-all duration-300"
+                  style={{ maxWidth: collapsed ? 0 : 160, opacity: collapsed ? 0 : 1 }}
+                >
+                  Collapse
+                </span>
+              </button>
+            </div>
+          )}
         </aside>
 
         {/* ── MAIN ────────────────────────────────────────────────── */}
@@ -174,35 +203,47 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           style={{ marginLeft: sideW }}
         >
           {/* Sticky topbar */}
-          <header className="h-[64px] bg-[#F2F1EC] border-b border-[#E6E5E0] flex items-center justify-between px-8 sticky top-0 z-30 flex-shrink-0">
+          <header className="h-[56px] md:h-[64px] bg-[#F2F1EC] border-b border-[#E6E5E0] flex items-center justify-between px-4 md:px-8 sticky top-0 z-30 flex-shrink-0">
 
-            {/* Left: breadcrumb + save indicator */}
-            <div className="flex items-center gap-3">
-              <span className="text-[#888] font-mono text-[11px] tracking-wide">BoA</span>
-              <span className="text-[#BBBBB0]">/</span>
-              <span className="text-[#0D0D0D] font-semibold text-[13.5px]">{crumb}</span>
+            {/* Left: hamburger (mobile) + breadcrumb + save indicator */}
+            <div className="flex items-center gap-2 md:gap-3 min-w-0">
+              {/* Hamburger — mobile only */}
+              {isMobile && (
+                <button
+                  onClick={() => setMobileOpen((v) => !v)}
+                  className="p-2 rounded-[8px] text-[#555] hover:bg-[#E6E5E0] transition-colors flex-shrink-0 -ml-1"
+                  aria-label="Open menu"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-5 h-5">
+                    <path d="M4 6h16M4 12h16M4 18h16"/>
+                  </svg>
+                </button>
+              )}
+              <span className="text-[#888] font-mono text-[11px] tracking-wide hidden sm:block">BoA</span>
+              <span className="text-[#BBBBB0] hidden sm:block">/</span>
+              <span className="text-[#0D0D0D] font-semibold text-[13px] md:text-[13.5px] truncate">{crumb}</span>
 
               {saveState === "saving" && (
-                <div className="flex items-center gap-1.5 text-[#888] ml-1">
-                  <span className="w-3 h-3 border-2 border-[#DDD] border-t-[#888] rounded-full animate-spin flex-shrink-0" />
-                  <span className="font-mono text-[10.5px]">Saving…</span>
+                <div className="flex items-center gap-1.5 text-[#888] ml-1 flex-shrink-0">
+                  <span className="w-3 h-3 border-2 border-[#DDD] border-t-[#888] rounded-full animate-spin" />
+                  <span className="font-mono text-[10.5px] hidden sm:block">Saving…</span>
                 </div>
               )}
               {saveState === "saved" && (
-                <div className="flex items-center gap-1.5 bg-[#1A6B3C]/10 border border-[#1A6B3C]/20 rounded-full px-2.5 py-1 ml-1">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-3 h-3 text-[#1A6B3C] flex-shrink-0">
+                <div className="flex items-center gap-1.5 bg-[#1A6B3C]/10 border border-[#1A6B3C]/20 rounded-full px-2 py-0.5 ml-1 flex-shrink-0">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-3 h-3 text-[#1A6B3C]">
                     <path d="M20 6L9 17l-5-5"/>
                   </svg>
-                  <span className="font-mono text-[10.5px] text-[#1A6B3C] font-semibold">Saved</span>
+                  <span className="font-mono text-[10.5px] text-[#1A6B3C] font-semibold hidden sm:block">Saved</span>
                 </div>
               )}
               {saveState === "error" && (
-                <span className="font-mono text-[10.5px] text-red-500 ml-1">Save failed</span>
+                <span className="font-mono text-[10.5px] text-red-500 ml-1 hidden sm:block">Save failed</span>
               )}
             </div>
 
             {/* Right: live badge + user dropdown */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <div className="hidden md:flex items-center gap-1.5 bg-[#E8A020]/10 border border-[#E8A020]/20 rounded-full px-3 py-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#E8A020] animate-pulse flex-shrink-0" />
                 <span className="font-mono text-[10px] text-[#B87C10] font-bold tracking-[0.1em]">LIVE</span>
@@ -211,7 +252,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               <div className="relative">
                 <button
                   onClick={() => setMenu((v) => !v)}
-                  className="flex items-center gap-2 bg-white border border-[#E6E5E0] rounded-[10px] px-3 py-2 hover:border-[#C8C8BF] transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
+                  className="flex items-center gap-1.5 md:gap-2 bg-white border border-[#E6E5E0] rounded-[10px] px-2.5 md:px-3 py-2 hover:border-[#C8C8BF] transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
                 >
                   <div className="w-6 h-6 rounded-full bg-[#0D0D0D] flex items-center justify-center text-[#E8A020] font-bold text-[11px] flex-shrink-0">
                     {user?.full_name?.charAt(0) ?? "A"}
@@ -255,7 +296,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </header>
 
           {/* Page content */}
-          <main className="flex-1 p-8 pb-16">
+          <main className="flex-1 p-4 md:p-8 pb-16">
             {children}
           </main>
         </div>

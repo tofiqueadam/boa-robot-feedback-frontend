@@ -113,8 +113,8 @@ export default function SettingsPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-serif font-semibold text-[26px] text-[#0D0D0D]">Settings</h1>
-        <p className="text-[#888] text-[13px] mt-0.5">Configure feedback collection and admin permissions</p>
+        <h1 className="font-serif font-semibold text-[22px] md:text-[26px] text-[#0D0D0D]">Settings</h1>
+        <p className="text-[#888] text-[12px] md:text-[13px] mt-0.5">Configure feedback collection and admin permissions</p>
       </div>
 
       {errorMsg && <div className="mb-4"><ErrorBanner message={errorMsg} /></div>}
@@ -129,7 +129,7 @@ export default function SettingsPage() {
       )}
 
       {settings && (
-        <div className="flex flex-col gap-4 max-w-[720px]">
+        <div className="flex flex-col gap-4 max-w-full md:max-w-[720px]">
 
           <Panel title="General">
             <Field label="Form name" desc="Displayed at the top of the feedback form">

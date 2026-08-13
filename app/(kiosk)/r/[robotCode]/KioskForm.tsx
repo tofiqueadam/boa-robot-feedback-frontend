@@ -184,10 +184,10 @@ export function KioskForm({ robotCode }: Props) {
           </div>
         ))}
 
-        {/* Submit bar — clean professional design, no perforations */}
-        <div className="mt-8 bg-[#0D0D0D] rounded-[16px] px-6 py-4 flex items-center justify-between shadow-[0_4px_24px_rgba(0,0,0,0.12)]">
-          <div className="flex items-center gap-3">
-            {/* Progress dots — small, tasteful */}
+        {/* Submit bar */}
+        <div className="mt-8 bg-[#0D0D0D] rounded-[16px] px-4 md:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-[0_4px_24px_rgba(0,0,0,0.12)]">
+          <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
+            {/* Progress dots */}
             <div className="flex gap-1.5">
               {Array.from({ length: totalRating }, (_, i) => (
                 <div
@@ -200,19 +200,20 @@ export function KioskForm({ robotCode }: Props) {
                 />
               ))}
             </div>
-            <span className="font-mono text-[11.5px] text-white/35">
-              ከ{totalRating} ሁነቶች {ratingAnswered} ተመዝኗል
+            <span className="font-mono text-[11px] text-white/35">
+              {ratingAnswered}/{totalRating}
             </span>
           </div>
           <button
             onClick={handleSubmit}
             disabled={!canSubmit || pageState === "submitting"}
-            className="bg-[#E8A020] text-[#0D0D0D] rounded-[10px] px-7 py-2.5 font-bold text-[13.5px] tracking-wide transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-35 disabled:cursor-not-allowed flex items-center gap-2.5"
+            className="w-full sm:w-auto bg-[#E8A020] text-[#0D0D0D] rounded-[10px] px-7 py-3 font-bold text-[13.5px] tracking-wide transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2.5"
           >
             {pageState === "submitting" && (
               <span className="w-4 h-4 border-2 border-[#0D0D0D]/25 border-t-[#0D0D0D] rounded-full animate-spin" />
             )}
-            አስተያየቱን ላክ</button>
+            አስተያየቱን ላክ
+          </button>
         </div>
 
         <p className="text-center font-mono text-[11px] tracking-wider text-ink-soft opacity-50 mt-8">

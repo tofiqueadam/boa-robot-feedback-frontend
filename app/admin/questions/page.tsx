@@ -206,26 +206,28 @@ export default function QuestionsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-7">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-7">
         <div>
-          <h1 className="font-serif font-semibold text-[26px] text-[#0D0D0D]">Questions</h1>
-          <p className="text-[#888] text-[13px] mt-0.5">
+          <h1 className="font-serif font-semibold text-[22px] md:text-[26px] text-[#0D0D0D]">Questions</h1>
+          <p className="text-[#888] text-[12px] md:text-[13px] mt-0.5">
             Drag categories to reorder · drag questions between categories freely
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-shrink-0">
           {perms.canManageCategories && (
             <button onClick={() => { setEditingSec(null); setSecTitle(""); setSecModalOpen(true); }}
-              className="bg-white border border-[#E6E5E0] text-[#0D0D0D] rounded-[10px] px-4 py-2.5 font-semibold text-[13px] flex items-center gap-1.5 hover:bg-[#F8F7F4] transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+              className="bg-white border border-[#E6E5E0] text-[#0D0D0D] rounded-[10px] px-3 md:px-4 py-2.5 font-semibold text-[13px] flex items-center gap-1.5 hover:bg-[#F8F7F4] transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-3.5 h-3.5"><path d="M12 5v14M5 12h14"/></svg>
-              New Category
+              <span className="hidden sm:inline">New Category</span>
+              <span className="sm:hidden">Category</span>
             </button>
           )}
           {perms.canAddEditQuestions && (
             <button onClick={() => { setEditingQ(null); setDefaultSection(undefined); setQModalOpen(true); }}
-              className="bg-[#0D0D0D] text-white rounded-[10px] px-4 py-2.5 font-semibold text-[13px] flex items-center gap-1.5 hover:bg-black transition-colors shadow-[0_2px_8px_rgba(0,0,0,0.15)]">
+              className="bg-[#0D0D0D] text-white rounded-[10px] px-3 md:px-4 py-2.5 font-semibold text-[13px] flex items-center gap-1.5 hover:bg-black transition-colors shadow-[0_2px_8px_rgba(0,0,0,0.15)]">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-3.5 h-3.5"><path d="M12 5v14M5 12h14"/></svg>
-              Add Question
+              <span className="hidden sm:inline">Add Question</span>
+              <span className="sm:hidden">Add</span>
             </button>
           )}
         </div>
