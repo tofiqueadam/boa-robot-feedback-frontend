@@ -1,16 +1,4 @@
 # Robot Feedback — Frontend
-
-**Bank of Abyssinia · Internal Use Only**
-
-Frontend for the robot customer feedback platform, serving both the customer-facing kiosk and the admin panel.
-
----
-
-## Prerequisites
-
-- Node.js 20+ (for standalone dev)
-- Or Docker Compose via the backend repo (recommended)
-
 ---
 
 ## Running with Docker
@@ -31,10 +19,6 @@ npm install
 npm run dev
 ```
 
-Create a `.env.local` file with the required API URL before starting.  
-Do not commit `.env.local`.
-
----
 
 ## Tech Stack
 
@@ -43,5 +27,3 @@ Do not commit `.env.local`.
 - **State** — TanStack Query
 
 ---
-
-*For access credentials and deployment details, contact the project maintainer.*
