@@ -61,6 +61,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       const mobile = window.innerWidth < MOBILE_BREAKPOINT;
       setIsMobile(mobile);
       if (mobile) setCollapsed(false);
+      // Auto-collapse sidebar on tablet (< 1280px) but not mobile
+      else if (window.innerWidth < 1280) setCollapsed(true);
     };
     check();
     window.addEventListener("resize", check);

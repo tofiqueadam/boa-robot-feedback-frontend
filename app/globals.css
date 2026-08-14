@@ -15,8 +15,8 @@
     min-height: 100vh;
   }
 
-  /* Scale up admin UI on tablets */
-  @media (min-width: 768px) and (max-width: 1280px) {
+  /* Scale up admin UI only in landscape tablet */
+  @media (min-width: 1024px) and (max-width: 1280px) and (orientation: landscape) {
     html { font-size: 112%; }
   }
 
