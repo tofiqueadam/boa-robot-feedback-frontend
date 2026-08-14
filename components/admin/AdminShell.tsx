@@ -154,7 +154,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                       {item.icon}
                     </span>
                     <span
-                      className="font-medium text-[13.5px] whitespace-nowrap overflow-hidden transition-all duration-300"
+                      className="font-medium text-[13.5px] md:text-[15px] whitespace-nowrap overflow-hidden transition-all duration-300"
                       style={{ maxWidth: mini ? 0 : 160, opacity: mini ? 0 : 1 }}
                     >
                       {item.label}
@@ -219,9 +219,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
                   </svg>
                 </button>
               )}
-              <span className="text-[#888] font-mono text-[11px] tracking-wide hidden sm:block">BoA</span>
+              <span className="text-[#888] font-mono text-[11px] md:text-[13px] tracking-wide hidden sm:block">BoA</span>
               <span className="text-[#BBBBB0] hidden sm:block">/</span>
-              <span className="text-[#0D0D0D] font-semibold text-[13px] md:text-[13.5px] truncate">{crumb}</span>
+              <span className="text-[#0D0D0D] font-semibold text-[13px] md:text-[15px] truncate">{crumb}</span>
 
               {saveState === "saving" && (
                 <div className="flex items-center gap-1.5 text-[#888] ml-1 flex-shrink-0">

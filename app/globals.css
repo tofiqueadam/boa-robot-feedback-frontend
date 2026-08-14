@@ -14,6 +14,12 @@
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
   }
+
+  /* Scale up admin UI on tablets */
+  @media (min-width: 768px) and (max-width: 1280px) {
+    html { font-size: 112%; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.001ms !important;

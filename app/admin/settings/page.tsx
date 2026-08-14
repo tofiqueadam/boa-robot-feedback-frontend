@@ -115,8 +115,8 @@ export default function SettingsPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-serif font-semibold text-[22px] md:text-[26px] text-[#0D0D0D]">Settings</h1>
-        <p className="text-[#888] text-[12px] md:text-[13px] mt-0.5">Configure feedback collection and admin permissions</p>
+        <h1 className="font-serif font-semibold text-[22px] md:text-[28px] text-[#0D0D0D]">Settings</h1>
+        <p className="text-[#888] text-[12px] md:text-[14px] mt-0.5">Configure feedback collection and admin permissions</p>
       </div>
 
       {errorMsg && <div className="mb-4"><ErrorBanner message={errorMsg} /></div>}
@@ -262,8 +262,8 @@ function Row({ label, desc, checked, onChange, disabled }: {
   return (
     <div className="flex items-center justify-between py-3 border-b border-[#F8F7F4] last:border-b-0 last:pb-0 first:pt-0">
       <div className="flex-1 min-w-0 pr-4">
-        <div className="text-sm font-medium text-[#0D0D0D]">{label}</div>
-        {desc && <div className="text-[12px] text-[#888] mt-0.5">{desc}</div>}
+        <div className="text-sm md:text-base font-medium text-[#0D0D0D]">{label}</div>
+        {desc && <div className="text-[12px] md:text-[13px] text-[#888] mt-0.5">{desc}</div>}
       </div>
       <Toggle checked={checked} onChange={onChange} disabled={disabled} label={label} />
     </div>
@@ -275,8 +275,8 @@ function Field({ label, desc, children }: {
 }) {
   return (
     <div className="py-3 border-b border-[#F8F7F4] last:border-b-0 last:pb-0 first:pt-0">
-      <label className="block text-sm font-semibold text-[#0D0D0D] mb-1">{label}</label>
-      {desc && <div className="text-[12px] text-[#888] mb-2">{desc}</div>}
+      <label className="block text-sm md:text-base font-semibold text-[#0D0D0D] mb-1">{label}</label>
+      {desc && <div className="text-[12px] md:text-[13px] text-[#888] mb-2">{desc}</div>}
       {children}
     </div>
   );

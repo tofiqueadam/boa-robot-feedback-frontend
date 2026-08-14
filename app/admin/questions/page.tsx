@@ -208,8 +208,8 @@ export default function QuestionsPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-7">
         <div>
-          <h1 className="font-serif font-semibold text-[22px] md:text-[26px] text-[#0D0D0D]">Questions</h1>
-          <p className="text-[#888] text-[12px] md:text-[13px] mt-0.5">
+          <h1 className="font-serif font-semibold text-[22px] md:text-[28px] text-[#0D0D0D]">Questions</h1>
+          <p className="text-[#888] text-[12px] md:text-[14px] mt-0.5">
             Drag categories to reorder · drag questions between categories freely
           </p>
         </div>
@@ -395,7 +395,7 @@ function SortableQuestionRow({ question, onEdit, onRetire }: {
         ⠿
       </span>
       <div className="flex-1 min-w-0">
-        <p className="text-[13.5px] font-medium text-[#0D0D0D] leading-snug truncate">
+        <p className="text-[13.5px] md:text-[15px] font-medium text-[#0D0D0D] leading-snug truncate">
           {question.current_version?.question_text ?? "—"}
         </p>
         <div className="flex items-center gap-2 mt-1 flex-wrap">
