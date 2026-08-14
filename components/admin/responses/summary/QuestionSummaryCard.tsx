@@ -13,15 +13,15 @@ export function QuestionSummaryCard({ summary }: Props) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-4">
         <div className="flex-1 min-w-0">
-          <p className="font-medium text-[14.5px] text-[#0D0D0D] leading-snug">
+          <p className="font-medium text-[14.5px] md:text-[17px] text-[#0D0D0D] leading-snug">
             {summary.question_text}
           </p>
-          <p className="font-mono text-[11px] text-[#888] mt-1.5">
+          <p className="font-mono text-[11px] md:text-[13px] text-[#888] mt-1.5">
             {summary.response_count.toLocaleString()} responses
           </p>
         </div>
         <div className="text-right flex-shrink-0">
-          <div className={`font-mono font-bold text-[28px] leading-none tracking-tight ${
+          <div className={`font-mono font-bold text-[28px] md:text-[36px] leading-none tracking-tight ${
             summary.needs_attention ? "text-red-500" : "text-[#1A6B3C]"
           }`}>
             {summary.average !== null ? summary.average.toFixed(2) : "—"}

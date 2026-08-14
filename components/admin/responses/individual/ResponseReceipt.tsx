@@ -44,10 +44,10 @@ export function ResponseReceipt({ response, onDelete }: Props) {
         <div className="px-6 py-5 border-b border-dashed border-[#E6E5E0]">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="font-mono text-[10px] text-[#999] uppercase tracking-[0.14em] mb-1">
+              <div className="font-mono text-[10px] md:text-[12px] text-[#999] uppercase tracking-[0.14em] mb-1">
                 Response #{response.id.slice(-6).toUpperCase()}
               </div>
-              <div className="font-semibold text-[16px] text-[#0D0D0D]">
+              <div className="font-semibold text-[16px] md:text-[18px] text-[#0D0D0D]">
                 {formatDate(response.submitted_at)}
               </div>
             </div>
@@ -64,8 +64,8 @@ export function ResponseReceipt({ response, onDelete }: Props) {
               { label: "Version",  value: response.robot_version },
             ].map(({ label, value }) => (
               <div key={label}>
-                <div className="font-mono text-[9.5px] uppercase tracking-wide text-[#999] mb-0.5">{label}</div>
-                <div className="font-semibold text-[12.5px] text-[#0D0D0D]">{value}</div>
+                <div className="font-mono text-[9.5px] md:text-[11px] uppercase tracking-wide text-[#999] mb-0.5">{label}</div>
+                <div className="font-semibold text-[12.5px] md:text-[14px] text-[#0D0D0D]">{value}</div>
               </div>
             ))}
           </div>
@@ -75,19 +75,19 @@ export function ResponseReceipt({ response, onDelete }: Props) {
         <div className="px-6 py-2 divide-y divide-dashed divide-[#EBEBEA]">
           {sorted.map((answer, i) => (
             <div key={answer.id} className="py-4">
-              <div className="text-[13px] font-medium text-[#0D0D0D] mb-2.5 leading-snug">
+              <div className="text-[13px] md:text-[15px] font-medium text-[#0D0D0D] mb-2.5 leading-snug">
                 {i + 1}. {answer.question_text}
               </div>
 
               {answer.question_type === "rating" && answer.rating_value !== null && (
                 <div className="flex items-center gap-3">
                   <StarDisplay value={answer.rating_value} size="sm" />
-                  <span className="font-mono text-[12px] text-[#888]">{answer.rating_value}/5</span>
+                  <span className="font-mono text-[12px] md:text-[14px] text-[#888]">{answer.rating_value}/5</span>
                 </div>
               )}
 
               {isComment(answer.question_type) && (
-                <div className="text-[13px] text-[#555] italic leading-relaxed bg-[#F8F8F6] rounded-lg px-3 py-2.5">
+                <div className="text-[13px] md:text-[15px] text-[#555] italic leading-relaxed bg-[#F8F8F6] rounded-lg px-3 py-2.5">
                   {answer.text_value
                     ? `"${answer.text_value}"`
                     : <span className="text-[#BBB] not-italic">No comment left.</span>
@@ -96,7 +96,7 @@ export function ResponseReceipt({ response, onDelete }: Props) {
               )}
 
               {answer.question_type === "multiple_choice" && (
-                <div className="text-[13px] text-[#555]">
+                <div className="text-[13px] md:text-[15px] text-[#555]">
                   {answer.selected_option_text ?? "No selection."}
                 </div>
               )}

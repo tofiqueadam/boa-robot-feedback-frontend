@@ -334,11 +334,11 @@ function SortableCategoryRow({ section, questions, onEdit, onRetire, onEditSecti
           className="text-[#CCC] hover:text-[#999] cursor-grab active:cursor-grabbing font-mono text-[16px] select-none flex-shrink-0 px-1"
           title="Drag to reorder">⠿</span>
 
-        <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-[#E8A020] font-bold flex-1">
+        <span className="font-mono text-[10px] md:text-[12px] tracking-[0.14em] uppercase text-[#E8A020] font-bold flex-1">
           {section.title}
         </span>
 
-        <span className="font-mono text-[10px] text-[#CCC]">
+        <span className="font-mono text-[10px] md:text-[12px] text-[#CCC]">
           {questions.length} question{questions.length !== 1 ? "s" : ""}
         </span>
 
@@ -353,7 +353,7 @@ function SortableCategoryRow({ section, questions, onEdit, onRetire, onEditSecti
         )}
 
         <button onClick={onAddQuestion}
-          className="flex items-center gap-1 px-2.5 py-1 rounded-[7px] text-[#888] hover:text-[#0D0D0D] hover:bg-[#F8F7F4] transition-colors text-[12px] font-medium">
+          className="flex items-center gap-1 px-2.5 py-1 rounded-[7px] text-[#888] hover:text-[#0D0D0D] hover:bg-[#F8F7F4] transition-colors text-[12px] md:text-[14px] font-medium">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-3 h-3">
             <path d="M12 5v14M5 12h14"/>
           </svg>
@@ -395,16 +395,16 @@ function SortableQuestionRow({ question, onEdit, onRetire }: {
         ⠿
       </span>
       <div className="flex-1 min-w-0">
-        <p className="text-[13.5px] md:text-[15px] font-medium text-[#0D0D0D] leading-snug truncate">
+        <p className="text-[13.5px] md:text-[16px] font-medium text-[#0D0D0D] leading-snug truncate">
           {question.current_version?.question_text ?? "—"}
         </p>
         <div className="flex items-center gap-2 mt-1 flex-wrap">
           <Badge variant={question.question_type as QuestionType}>
             {TYPE_LABELS[question.question_type as QuestionType]}
           </Badge>
-          <span className="text-[11px] text-[#CCC]">{question.required ? "Required" : "Optional"}</span>
+          <span className="text-[11px] md:text-[13px] text-[#CCC]">{question.required ? "Required" : "Optional"}</span>
           {question.include_in_overall_score && question.question_type === "rating" && (
-            <span className="text-[11px] text-[#1A6B3C] font-mono">✓ overall</span>
+            <span className="text-[11px] md:text-[13px] text-[#1A6B3C] font-mono">✓ overall</span>
           )}
         </div>
       </div>
