@@ -137,6 +137,7 @@ export interface AppSettings {
   // Admin role permissions
   perm_view_responses: boolean;
   perm_export_responses: boolean;
+  perm_delete_responses: boolean;
   perm_view_questions: boolean;
   perm_add_edit_questions: boolean;
   perm_retire_questions: boolean;

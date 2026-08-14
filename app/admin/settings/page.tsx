@@ -11,6 +11,7 @@ import { formatDate } from "@/lib/utils";
 const PERM_ROWS: { key: keyof AppSettings; label: string; desc: string }[] = [
   { key: "perm_view_responses",        label: "View responses & summary",       desc: "Access the Responses section and Summary tab" },
   { key: "perm_export_responses",      label: "Export responses",               desc: "Download CSV and Excel exports" },
+  { key: "perm_delete_responses",      label: "Delete individual responses",    desc: "Permanently delete a single response from Individual Responses" },
   { key: "perm_view_questions",        label: "View questions",                 desc: "See all questions and categories" },
   { key: "perm_add_edit_questions",    label: "Add & edit questions",           desc: "Create new questions and edit existing ones" },
   { key: "perm_retire_questions",      label: "Retire questions",               desc: "Remove questions from future forms" },
@@ -78,6 +79,7 @@ export default function SettingsPage() {
           ...(isSuperAdmin ? {
             perm_view_responses:        updated.perm_view_responses,
             perm_export_responses:      updated.perm_export_responses,
+            perm_delete_responses:      updated.perm_delete_responses,
             perm_view_questions:        updated.perm_view_questions,
             perm_add_edit_questions:    updated.perm_add_edit_questions,
             perm_retire_questions:      updated.perm_retire_questions,

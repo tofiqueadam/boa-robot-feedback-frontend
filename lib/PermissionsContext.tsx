@@ -6,6 +6,7 @@ const defaultPermissions: Permissions = {
   isSuperAdmin: false,
   canViewResponses: true,
   canExportResponses: true,
+  canDeleteResponses: false,
   canViewQuestions: true,
   canAddEditQuestions: false,
   canRetireQuestions: false,

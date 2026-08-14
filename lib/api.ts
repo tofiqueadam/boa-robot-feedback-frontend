@@ -151,6 +151,12 @@ export const api = {
       `/api/admin/responses/individual/${id}`
     ),
 
+  deleteResponse: (id: string) =>
+    request<{ deleted: boolean }>(
+      `/api/admin/responses/individual/${id}`,
+      { method: "DELETE" }
+    ),
+
   getExportUrl: (fmt: "csv" | "xlsx", params: Record<string, string | undefined>) => {
     const q = new URLSearchParams({ fmt });
     Object.entries(params).forEach(([k, v]) => v && q.set(k, v));
