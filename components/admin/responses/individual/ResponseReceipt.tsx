@@ -2,11 +2,14 @@ import type { IndividualResponse } from "@/types";
 import { StarDisplay } from "@/components/ui/StarDisplay";
 import { formatDate } from "@/lib/utils";
 
-interface Props { response: IndividualResponse }
+interface Props {
+  response: IndividualResponse;
+  onDelete?: () => void;
+}
 
 const isComment = (type: string) => type === "paragraph" || type === "short_text";
 
-export function ResponseReceipt({ response }: Props) {
+export function ResponseReceipt({ response, onDelete }: Props) {
   // Ratings and multiple choice first, comments (paragraph/short_text) last
   const sorted = [...response.answers].sort((a, b) => {
     if (isComment(a.question_type) && !isComment(b.question_type)) return 1;
@@ -19,7 +22,21 @@ export function ResponseReceipt({ response }: Props) {
       {/* Header bar */}
       <div className="bg-[#0D0D0D] rounded-t-[14px] px-6 py-3 flex items-center justify-between">
         <span className="font-mono text-[10px] text-white/30 tracking-[0.16em] uppercase">Response Receipt</span>
-        <span className="w-2 h-2 rounded-full bg-[#E8A020]" />
+        <div className="flex items-center gap-3">
+          {onDelete && (
+            <button
+              onClick={onDelete}
+              className="flex items-center gap-1.5 text-red-400 hover:text-red-300 transition-colors"
+              title="Delete this response"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-3.5 h-3.5">
+                <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/>
+              </svg>
+              <span className="font-mono text-[10px] tracking-wide">Delete</span>
+            </button>
+          )}
+          <span className="w-2 h-2 rounded-full bg-[#E8A020]" />
+        </div>
       </div>
 
       <div className="bg-white border border-[#E6E5E0] border-t-0 rounded-b-[14px] shadow-[0_4px_24px_rgba(0,0,0,0.07)] overflow-hidden">

@@ -90,25 +90,18 @@ export function IndividualTab({ robots, locations }: Props) {
 
           <div className="flex items-center gap-3">
             <span className="font-mono text-[12px] text-ink-soft">Response {page} of {total.toLocaleString()}</span>
-            {perms.canDeleteResponses && current && (
-              <button
-                onClick={() => setConfirmOpen(true)}
-                disabled={loading}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] text-[12.5px] font-semibold text-red-500 border border-red-200 bg-red-50 hover:bg-red-100 transition-colors disabled:opacity-40"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-3.5 h-3.5">
-                  <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/>
-                </svg>
-                Delete
-              </button>
-            )}
           </div>
         </div>
       )}
 
       {loading && <LoadingSpinner />}
       {!loading && total === 0 && <EmptyState title="No responses found" description="Try adjusting your filters." />}
-      {!loading && current && <ResponseReceipt response={current} />}
+      {!loading && current && (
+        <ResponseReceipt
+          response={current}
+          onDelete={perms.canDeleteResponses ? () => setConfirmOpen(true) : undefined}
+        />
+      )}
 
       {/* Confirm delete dialog */}
       {confirmOpen && current && (
