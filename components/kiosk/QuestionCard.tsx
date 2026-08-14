@@ -37,12 +37,12 @@ export function QuestionCard({ question, answer, onAnswer }: QuestionCardProps) 
   };
 
   return (
-    <div className="bg-paper-2 border border-line rounded-card p-5 mb-3 shadow-card">
-      <p className="text-[15.5px] font-medium mb-4 leading-snug">
+    <div className="bg-paper-2 border border-line rounded-card p-5 md:p-7 mb-3 md:mb-4 shadow-card">
+      <p className="text-[15.5px] md:text-[18px] font-medium mb-4 md:mb-6 leading-snug">
         {cv.question_text}
         {question.required && <span className="text-attention ml-1">*</span>}
         {!question.required && (
-          <span className="text-ink-soft font-normal ml-1 text-sm">(ግዴታ አይደለም)</span>
+          <span className="text-ink-soft font-normal ml-1 text-sm md:text-base">(ግዴታ አይደለም)</span>
         )}
       </p>
 
@@ -60,7 +60,7 @@ export function QuestionCard({ question, answer, onAnswer }: QuestionCardProps) 
           value={answer?.text_value ?? ""}
           onChange={(e) => handleText(e.target.value)}
           placeholder="Your answer…"
-          className="w-full border border-line rounded-xl bg-paper px-4 py-2.5 text-[14.5px] focus:outline-2 focus:outline-positive"
+          className="w-full border border-line rounded-xl bg-paper px-4 py-2.5 md:py-3 text-[14.5px] md:text-[17px] focus:outline-2 focus:outline-positive"
         />
       )}
 
@@ -71,9 +71,9 @@ export function QuestionCard({ question, answer, onAnswer }: QuestionCardProps) 
             onChange={(e) => handleText(e.target.value)}
             placeholder="አስተያየትዎን ይጻፉ…"
             rows={3}
-            className="w-full border border-line rounded-xl bg-paper px-4 py-3 text-[14.5px] resize-y focus:outline-2 focus:outline-positive"
+            className="w-full border border-line rounded-xl bg-paper px-4 py-3 text-[14.5px] md:text-[17px] resize-y focus:outline-2 focus:outline-positive"
           />
-          <p className="text-xs text-ink-soft mt-1.5 opacity-75">
+          <p className="text-xs md:text-sm text-ink-soft mt-1.5 opacity-75">
             ግዴታ አይደለም — ነገር ግን ዝርዝር አስተያየትዎ የበለጠ ይረዳናል።
           </p>
         </>

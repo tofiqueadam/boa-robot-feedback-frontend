@@ -139,8 +139,8 @@ export function KioskForm({ robotCode }: Props) {
 
   if (pageState === "thanks" && settings) {
     return (
-      <div className="flex justify-center px-5 py-14 min-h-screen bg-paper">
-        <div className="w-full max-w-[600px]">
+      <div className="flex justify-center px-4 sm:px-8 py-14 min-h-screen bg-paper">
+        <div className="w-full max-w-[600px] md:max-w-[800px]">
           <ThankYou
             message={settings.thank_you_message}
             locationName={robot?.location.name ?? ""}
@@ -152,8 +152,8 @@ export function KioskForm({ robotCode }: Props) {
   }
 
   return (
-    <div className="flex justify-center px-5 py-12 pb-24 min-h-screen bg-paper">
-      <div className="w-full max-w-[600px]">
+    <div className="flex justify-center px-4 sm:px-8 py-10 md:py-14 pb-24 min-h-screen bg-paper">
+      <div className="w-full max-w-[600px] md:max-w-[800px] lg:max-w-[900px]">
         {robot && settings && (
           <KioskHeader
             robotName={robot.name}
@@ -169,8 +169,8 @@ export function KioskForm({ robotCode }: Props) {
         )}
 
         {sections.map((section) => (
-          <div key={section.id} className="mb-6">
-            <div className="font-mono text-[11px] tracking-[0.14em] uppercase text-gold-deep font-bold mb-3 pl-0.5">
+          <div key={section.id} className="mb-6 md:mb-8">
+            <div className="font-mono text-[11px] md:text-[13px] tracking-[0.14em] uppercase text-gold-deep font-bold mb-3 pl-0.5">
               {section.title}
             </div>
             {section.questions.map((q) => (
@@ -185,29 +185,28 @@ export function KioskForm({ robotCode }: Props) {
         ))}
 
         {/* Submit bar */}
-        <div className="mt-8 bg-[#0D0D0D] rounded-[16px] px-4 md:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-[0_4px_24px_rgba(0,0,0,0.12)]">
-          <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
-            {/* Progress dots */}
+        <div className="mt-8 bg-[#0D0D0D] rounded-[16px] px-4 md:px-8 py-4 md:py-5 flex flex-row items-center justify-between gap-3 shadow-[0_4px_24px_rgba(0,0,0,0.12)]">
+          <div className="flex items-center gap-3">
             <div className="flex gap-1.5">
               {Array.from({ length: totalRating }, (_, i) => (
                 <div
                   key={i}
-                  className={`h-1.5 rounded-full transition-all duration-200 ${
+                  className={`h-1.5 md:h-2 rounded-full transition-all duration-200 ${
                     i < ratingAnswered
-                      ? "w-4 bg-[#E8A020]"
-                      : "w-1.5 bg-white/20"
+                      ? "w-4 md:w-5 bg-[#E8A020]"
+                      : "w-1.5 md:w-2 bg-white/20"
                   }`}
                 />
               ))}
             </div>
-            <span className="font-mono text-[11px] text-white/35">
+            <span className="font-mono text-[11px] md:text-[13px] text-white/35">
               {ratingAnswered}/{totalRating}
             </span>
           </div>
           <button
             onClick={handleSubmit}
             disabled={!canSubmit || pageState === "submitting"}
-            className="w-full sm:w-auto bg-[#E8A020] text-[#0D0D0D] rounded-[10px] px-7 py-3 font-bold text-[13.5px] tracking-wide transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2.5"
+            className="bg-[#E8A020] text-[#0D0D0D] rounded-[10px] px-7 md:px-10 py-3 md:py-4 font-bold text-[13.5px] md:text-[16px] tracking-wide transition-all hover:brightness-105 active:scale-[0.98] disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center gap-2.5"
           >
             {pageState === "submitting" && (
               <span className="w-4 h-4 border-2 border-[#0D0D0D]/25 border-t-[#0D0D0D] rounded-full animate-spin" />
@@ -216,7 +215,7 @@ export function KioskForm({ robotCode }: Props) {
           </button>
         </div>
 
-        <p className="text-center font-mono text-[11px] tracking-wider text-ink-soft opacity-50 mt-8">
+        <p className="text-center font-mono text-[11px] md:text-[13px] tracking-wider text-ink-soft opacity-50 mt-8">
           BANK OF ABYSSINIA · THE CHOICE FOR ALL
         </p>
       </div>
